@@ -25,6 +25,19 @@
   (force-output)
   (read-line))
 
+(defun read-integers ()
+  (->> (read-input "Enter numbers: ")
+       (uiop:split-string)
+       (mapcar (lambda (s) (parse-integer s :junk-allowed t)))
+       (remove-if #'null)))
+
+(defun read-until-integers ()
+  (let ((inp (read-integers)))
+    (while (null inp)
+      (format t "Need at least one integer...~%")
+      (setq inp (read-integers)))
+    inp))
+
 (defun start ()
-  (->> (read-input "Enter name: ")
-       (format t "Hello, ~a!~%")))
+  (--> (read-until-integers)
+       (format t "~a = ~a~%" (cons '+ _) (reduce #'+ _))))
