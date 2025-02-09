@@ -13,10 +13,15 @@
 
 ;;; Commentary:
 
-;;
+;; Define the packages (namespaces) involved in this project.
 
 ;;; Code:
 
-(defpackage main
+(defpackage lib.macros
   (:use :cl)
+  (:export
+   :_ :--> :->>))
+
+(defpackage main
+  (:use :cl :lib.macros)
   (:export :start))
