@@ -20,7 +20,8 @@
 (defpackage lib.macros
   (:use :cl)
   (:export
-   :_ :--> :->>))
+   :_ :--> :->>
+   :while))
 
 (defpackage main
   (:use :cl :lib.macros)

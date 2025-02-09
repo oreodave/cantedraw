@@ -61,3 +61,8 @@ Like the `|>' operator in Ocaml."
             :for canon-func = (if (symbolp func) (list func) func)
             :do (setq acc (append canon-func (list acc)))
             :finally (return acc))))
+
+(defmacro while (condition &body body)
+  `(loop :while ,condition
+         :do
+         (progn ,@body)))
