@@ -21,7 +21,8 @@
   (:use :cl)
   (:export
    :_ :--> :->>
-   :while))
+   :while
+   :-> :fn))
 
 (defpackage main
   (:use :cl :lib.macros)

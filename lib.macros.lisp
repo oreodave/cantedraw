@@ -66,3 +66,15 @@ Like the `|>' operator in Ocaml."
   `(loop :while ,condition
          :do
          (progn ,@body)))
+
+(deftype -> (args result)
+  "Type alias for function."
+  `(function ,args ,result))
+
+(defmacro fn (name lambda-list type &body body)
+  "Construct a function `NAME' with a declared function type `TYPE' that takes
+arguments `LAMBDA-LIST' with body `BODY'."
+  `(progn
+     (declaim (ftype ,type ,name))
+     (defun ,name ,lambda-list
+       ,@body)))
