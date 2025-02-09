@@ -20,5 +20,11 @@
 
 (in-package :main)
 
+(defun read-input (&optional (prompt "> "))
+  (format t "~a" prompt)
+  (force-output)
+  (read-line))
+
 (defun start ()
-  (format t "Hello, world!"))
+  (->> (read-input "Enter name: ")
+       (format t "Hello, ~a!~%")))
