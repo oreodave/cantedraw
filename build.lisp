@@ -1,0 +1,5 @@
+(ql:quickload :asdf)
+(ql:quickload :deploy)
+(push :deploy-console *features*)
+(asdf:load-asd (merge-pathnames "odraw.asd" (uiop:getcwd)))
+(asdf:make :odraw)
