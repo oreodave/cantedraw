@@ -24,6 +24,12 @@
    :while
    :-> :fn))
 
+(defpackage lib.functions
+  (:use :cl :lib.macros)
+  (:export
+   :range
+   :parse-integer*))
+
 (defpackage main
   (:use :cl :lib.macros)
   (:export :start))

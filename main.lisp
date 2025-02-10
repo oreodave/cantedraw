@@ -28,7 +28,7 @@
 (fn parse-integers (input) (-> (string) list)
   (->> input
        (uiop:split-string)
-       (mapcar (lambda (s) (parse-integer s :junk-allowed t)))
+       (mapcar #'parse-integer*)
        (remove-if #'null)))
 
 (fn read-integers () (-> nil list)
