@@ -22,7 +22,7 @@
   (:export
    :_ :--> :->>
    :-> :fn
-   :while
+   :while :alist-val
    :$))
 
 (defpackage lib.functions
