@@ -22,7 +22,8 @@
   (:export
    :_ :--> :->>
    :while
-   :-> :fn))
+   :-> :fn
+   :$))
 
 (defpackage lib.functions
   (:use :cl :lib.macros)

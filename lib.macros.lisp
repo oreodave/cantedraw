@@ -77,3 +77,9 @@ arguments `LAMBDA-LIST' with body `BODY'."
      (declaim (ftype ,type ,name))
      (defun ,name ,lambda-list
        ,@body)))
+
+(defmacro $ (&rest forms)
+  "Given a sequence of FORMS, return a unary function which applies each form
+sequentially"
+  `(lambda (x)
+     (->> x ,@forms)))
