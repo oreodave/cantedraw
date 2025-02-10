@@ -29,7 +29,7 @@
   (:use :cl :lib.macros)
   (:export
    :parse-integer*
-   :range :take))
+   :range :take :split))
 
 (defpackage main
   (:use :cl :lib.macros)

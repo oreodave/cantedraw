@@ -32,3 +32,7 @@ each member is STEP distance apart."
 
 (fn take (n lst) (-> (fixnum list) list)
   (subseq lst 0 n))
+
+(fn split (n lst) (-> (fixnum list) list)
+  (cons (take n lst)
+        (subseq lst n)))
