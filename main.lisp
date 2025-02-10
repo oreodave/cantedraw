@@ -20,21 +20,22 @@
 
 (in-package :main)
 
-(fn read-input (&optional (prompt "> "))
-    (-> (&optional string) string)
+(fn read-input (&optional (prompt "> ")) (-> (&optional string) string)
   (format t "~a" prompt)
   (force-output)
   (read-line))
 
-(fn read-integers ()
-    (-> nil list)
-  (->> (read-input "Enter numbers: ")
+(fn parse-integers (input) (-> (string) list)
+  (->> input
        (uiop:split-string)
        (mapcar (lambda (s) (parse-integer s :junk-allowed t)))
        (remove-if #'null)))
 
-(fn read-until-integers ()
-    (-> nil list)
+(fn read-integers () (-> nil list)
+  (->> (read-input "Enter numbers: ")
+       parse-integers))
+
+(fn read-until-integers () (-> nil list)
   (let ((inp (read-integers)))
     (while (null inp)
       (format t "Need at least one integer...~%")
