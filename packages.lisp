@@ -21,15 +21,15 @@
   (:use :cl)
   (:export
    :_ :--> :->>
-   :while
    :-> :fn
+   :while
    :$))
 
 (defpackage lib.functions
   (:use :cl :lib.macros)
   (:export
-   :range
-   :parse-integer*))
+   :parse-integer*
+   :range :take))
 
 (defpackage main
   (:use :cl :lib.macros)

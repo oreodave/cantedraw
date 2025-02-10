@@ -29,3 +29,6 @@ each member is STEP distance apart."
 
 (fn parse-integer* (inp) (-> (string) (or integer list))
   (parse-integer inp :junk-allowed t))
+
+(fn take (n lst) (-> (fixnum list) list)
+  (subseq lst 0 n))
