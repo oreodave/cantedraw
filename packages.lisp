@@ -29,7 +29,8 @@
   (:use :cl :lib.macros)
   (:export
    :parse-integer*
-   :range :take :split))
+   :range :take :split
+   :rev-map))
 
 (defpackage main
   (:use :cl :lib.macros)

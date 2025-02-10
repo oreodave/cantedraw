@@ -28,11 +28,28 @@ each member is STEP distance apart."
             :collect i)))
 
 (fn parse-integer* (inp) (-> (string) (or integer list))
+  "Given string INP, attempt to parse an integer.  Return NIL otherwise."
   (parse-integer inp :junk-allowed t))
 
 (fn take (n lst) (-> (fixnum list) list)
+  "Return the first N elements of LST."
   (subseq lst 0 n))
 
 (fn split (n lst) (-> (fixnum list) list)
+  "Return CONS where CAR is the first N elements of LST and CDR is the rest."
   (cons (take n lst)
         (subseq lst n)))
+
+(fn rev-map (indicator lst &key (key-eq #'eq))
+    (-> (function list &key (:key-eq function)) list)
+  "Given LST and INDICATOR: LST -> A, return an association list A -> 2^LST
+where key x in A has associations {y in LST : INDICATOR(y) = x}."
+  (loop :with assoc-list := nil
+        :for element :in lst
+        :for key = (funcall indicator element)
+        :if (assoc key assoc-list :test key-eq)
+          :do (setf (alist-val key assoc-list)
+                    (cons element (alist-val key assoc-list)))
+        :else
+          :do (setq assoc-list (acons key element assoc-list))
+        :finally (return assoc-list)))
