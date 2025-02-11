@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+set -xe
+sbcl --load "./bob.lisp" \
+     --eval "(bob:build)"
