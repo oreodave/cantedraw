@@ -48,8 +48,9 @@ where key x in A has associations {y in LST : INDICATOR(y) = x}."
         :for element :in lst
         :for key = (funcall indicator element)
         :if (assoc key assoc-list :test key-eq)
-          :do (setf (alist-val key assoc-list)
-                    (cons element (alist-val key assoc-list)))
+          :do (->> (alist-val key assoc-list)
+                   (cons element)
+                   (setf (alist-val key assoc-list)))
         :else
-          :do (setq assoc-list (acons key element assoc-list))
+          :do (setq assoc-list (cons (list key element) assoc-list))
         :finally (return assoc-list)))
