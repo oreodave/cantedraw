@@ -32,6 +32,6 @@
    :range :take :split
    :rev-map))
 
-(defpackage main
+(defpackage odraw
   (:use :cl :lib.macros :lib.functions)
   (:export :start))

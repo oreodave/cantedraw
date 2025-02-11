@@ -3,7 +3,7 @@
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
-               (:file "main"))
+               (:file "odraw"))
   :build-operation "deploy-op"
   :build-pathname "odraw"
-  :entry-point "main:start")
+  :entry-point "odraw:start")

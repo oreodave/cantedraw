@@ -1,4 +1,4 @@
-;;; main.lisp - 2025-02-09
+;;; odraw.lisp - 2025-02-11
 
 ;; Copyright (C) 2025 Aryadev Chavali
 
@@ -13,12 +13,12 @@
 
 ;;; Commentary:
 
-;; Implementation of `main' package.  Defines the entrypoint of the program,
+;; Implementation of `odraw' package.  Defines the entrypoint of the program,
 ;; handling any input from the user and passing it into the system.
 
 ;;; Code:
 
-(in-package :main)
+(in-package :odraw)
 
 (fn read-input (&optional (prompt "> ")) (-> (&optional string) string)
   (format t "~a" prompt)
