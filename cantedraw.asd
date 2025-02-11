@@ -1,9 +1,9 @@
-(asdf:defsystem :odraw
+(asdf:defsystem :cantedraw
   :depends-on (:deploy)
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
-               (:file "odraw"))
+               (:file "cantedraw"))
   :build-operation "deploy-op"
-  :build-pathname "odraw"
-  :entry-point "odraw:start")
+  :build-pathname "cantedraw"
+  :entry-point "cantedraw:start")

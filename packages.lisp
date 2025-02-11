@@ -32,6 +32,6 @@
    :range :take :split
    :rev-map))
 
-(defpackage odraw
+(defpackage cantedraw
   (:use :cl :lib.macros :lib.functions)
   (:export :start))

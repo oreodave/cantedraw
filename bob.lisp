@@ -26,11 +26,11 @@
 (in-package :bob)
 
 (ql:quickload :deploy)
-(asdf:load-asd (merge-pathnames "odraw.asd" (uiop:getcwd)))
+(asdf:load-asd (merge-pathnames "cantedraw.asd" (uiop:getcwd)))
 
 (defun build ()
   (push :deploy-console *features*)
-  (asdf:make :odraw))
+  (asdf:make :cantedraw))
 
 (defun load-all ()
-  (asdf:load-system :odraw))
+  (asdf:load-system :cantedraw))
