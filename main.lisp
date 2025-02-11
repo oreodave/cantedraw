@@ -27,7 +27,7 @@
 
 (fn parse-integers (input) (-> (string) list)
   (->> input
-       (uiop:split-string)
+       uiop:split-string
        (mapcar #'parse-integer*)
        (remove-if #'null)))
 
@@ -39,9 +39,11 @@
   (let ((inp (read-integers)))
     (while (null inp)
       (format t "Need at least one integer...~%")
+      (force-output)
       (setq inp (read-integers)))
     inp))
 
 (defun start ()
   (--> (read-until-integers)
-       (format t "~a = ~a~%" (cons '+ _) (reduce #'+ _))))
+       (cons '+ _)
+       (format t "~a = ~a~%" _ (eval _))))
