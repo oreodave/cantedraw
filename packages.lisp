@@ -33,5 +33,5 @@
    :rev-map))
 
 (defpackage main
-  (:use :cl :lib.macros)
+  (:use :cl :lib.macros :lib.functions)
   (:export :start))
