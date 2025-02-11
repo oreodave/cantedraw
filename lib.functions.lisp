@@ -27,10 +27,6 @@ each member is STEP distance apart."
       (loop :for i :from start :to (1- end) :by step
             :collect i)))
 
-(fn parse-integer* (inp) (-> (string) (or integer list))
-  "Given string INP, attempt to parse an integer.  Return NIL otherwise."
-  (parse-integer inp :junk-allowed t))
-
 (fn take (n lst) (-> (fixnum list) list)
   "Return the first N elements of LST."
   (subseq lst 0 n))
@@ -54,3 +50,7 @@ where key x in A has associations {y in LST : INDICATOR(y) = x}."
         :else
           :do (setq assoc-list (cons (list key element) assoc-list))
         :finally (return assoc-list)))
+
+(fn parse-integer* (inp) (-> (string) (or integer list))
+  "Given string INP, attempt to parse an integer.  Return NIL otherwise."
+  (parse-integer inp :junk-allowed t))
