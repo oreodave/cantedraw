@@ -8,6 +8,7 @@
                (:module "src"
                 :components
                 ((:file "model")
+                 (:file "game")
                  (:file "main"))))
   :build-operation "program-op"
   :build-pathname "bin/cantedraw"

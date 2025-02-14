@@ -48,8 +48,17 @@
    ;; Constructors
    :make-joker :make-deck))
 
-(defpackage cantedraw.main
+(defpackage cantedraw.game
   (:use :cl
    :cantedraw.lib.macros :cantedraw.lib.functions
    :cantedraw.model)
+  (:export
+   :deal-cards
+   :deal-hands
+   :redeal-hand))
+
+(defpackage cantedraw.main
+  (:use :cl
+   :cantedraw.lib.macros :cantedraw.lib.functions
+   :cantedraw.model :cantedraw.game)
   (:export :start))
