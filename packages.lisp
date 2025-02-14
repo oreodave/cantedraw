@@ -32,6 +32,10 @@
    :range :take :split
    :rev-map))
 
+(defpackage cantedraw.model
+  (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
+  (:export :int-card :rank :suit :card :cardset))
+
 (defpackage cantedraw.main
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
   (:export :start))

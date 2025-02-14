@@ -2,6 +2,7 @@
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
+               (:file "model")
                (:file "main"))
   :build-operation "program-op"
   :build-pathname "bin/cantedraw"
