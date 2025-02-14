@@ -88,3 +88,32 @@
     (if (eq r1 r2)
         (suit< s1 s2)
         (rank< r1 r2))))
+
+(fn suit->str (suit) (-> (suit) string)
+  (case suit
+    (:Diamonds "◆")
+    (:Clubs    "♣")
+    (:Hearts   "♥")
+    (:Spades   "♠")
+    (t         "Joker")))
+
+(fn rank->str (rank) (-> (rank) string)
+  (case rank
+    (:Ace   "Ace")
+    (:Jack  "Jack")
+    (:Queen "Queen")
+    (:King  "King")
+    (t      (format nil "~a" rank))))
+
+(fn card->str (card) (-> (card) string)
+  (destructuring-bind (rank . suit) card
+    (if (eq suit :Joker)
+        "Joker"
+        (format nil "~a[~a]"
+                (rank->str rank)
+                (suit->str suit)))))
+
+(fn cardset->str (cardset) (-> (cardset) string)
+  (->> cardset
+       (mapcar #'card->str)
+       (format nil "~{~a~^, ~}")))

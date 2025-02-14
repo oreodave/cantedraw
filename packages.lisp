@@ -41,7 +41,9 @@
    :int->suit :int->rank :int->card
    :suit->int :rank->int :card->int
    ;; Comparators
-   :suit< :rank< :card<))
+   :suit< :rank< :card<
+   ;; Serialisers
+   :suit->str :rank->str :card->str :cardset->str))
 
 (defpackage cantedraw.main
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
