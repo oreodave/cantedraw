@@ -54,3 +54,9 @@ where key x in A has associations {y in LST : INDICATOR(y) = x}."
 (fn parse-integer* (inp) (-> (string) (or integer list))
   "Given string INP, attempt to parse an integer.  Return NIL otherwise."
   (parse-integer inp :junk-allowed t))
+
+(fn remove-at-indices (indices lst) (-> (list list) list)
+  (loop :for i :from 0 :to (1- (length lst))
+        :for item :in lst
+        :if (not (member i indices))
+          :collect item))

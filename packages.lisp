@@ -30,7 +30,8 @@
   (:export
    :parse-integer*
    :range :take :split
-   :rev-map))
+   :rev-map
+   :remove-at-indices))
 
 (defpackage cantedraw.model
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
