@@ -58,10 +58,6 @@
       (setq inp (remove-duplicates (read-integers))))
     inp))
 
-(defun generate-hand ()
-  (->> (make-deck)
-       alexandria:shuffle
-       (split 5)))
 (defun print-hand (hand)
   (->> hand cardset->str (format t "Hand=[~a]~%")))
 
@@ -83,7 +79,12 @@
 
 (defun start ()
   (setf *random-state* (make-random-state t))
-  (destructuring-bind (hand . rest) (generate-hand)
-    (declare (ignore rest))
-    (->> hand cardset->str (format t "Hand=[~a]~%"))
-    (force-output)))
+  (destructuring-bind (final-hand . rest)
+      (->> (make-deck)
+           alexandria:shuffle
+           (read-redeal-print nil))
+    (format t "Cards remaining: {~a}
+
+Final hand: [~a]"
+            (cardset->str rest)
+            (cardset->str final-hand))))
