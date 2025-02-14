@@ -38,7 +38,7 @@ Also includes transformer where symbols are considered unary functions i.e.
       nil
       (let ((assignment-forms
               (loop :for f :in forms
-                    :for canon-f = (if (symbolp f) (list f 'lib.macros:_) f)
+                    :for canon-f := (if (symbolp f) (list f 'lib.macros:_) f)
                     :collect `(lib.macros:_ ,canon-f))))
         `(let* ,assignment-forms
            lib.macros:_))))

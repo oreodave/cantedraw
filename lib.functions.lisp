@@ -42,7 +42,7 @@ each member is STEP distance apart."
 where key x in A has associations {y in LST : INDICATOR(y) = x}."
   (loop :with assoc-list := nil
         :for element :in lst
-        :for key = (funcall indicator element)
+        :for key := (funcall indicator element)
         :if (assoc key assoc-list :test key-eq)
           :do (->> (alist-val key assoc-list)
                    (cons element)
