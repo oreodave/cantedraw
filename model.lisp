@@ -52,12 +52,13 @@
     (t         4)))
 
 (fn int->rank (n) (-> (int-card) rank)
-  (case (mod n 13)
-    (9 :Jack)
-    (10 :Queen)
-    (11 :King)
-    (12  :Ace)
-    (t  (+ n 2))))
+  (let ((n (mod n 13)))
+    (case n
+      (9 :Jack)
+      (10 :Queen)
+      (11 :King)
+      (12  :Ace)
+      (t  (+ n 2)))))
 
 (fn rank->int (rank) (-> (rank) (integer 0 12))
   (case rank
