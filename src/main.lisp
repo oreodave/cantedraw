@@ -50,10 +50,13 @@
 
 (fn read-until-valid-integers () (-> nil list)
   (let ((inp (remove-duplicates (read-integers))))
-    (while (not (every #'is-valid-hand-index inp))
+    (while (not (and (every #'is-valid-hand-index inp)
+                     (< (length inp) 5)
+                     (>= (length inp) 0)))
       (format t "Need at most 5 integers between 0 and 4...~%")
       (force-output)
-      (setq inp (remove-duplicates (read-integers))))))
+      (setq inp (remove-duplicates (read-integers))))
+    inp))
 
 (defun generate-hand ()
   (->> (make-deck)
