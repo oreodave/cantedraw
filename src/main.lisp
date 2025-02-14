@@ -62,6 +62,24 @@
   (->> (make-deck)
        alexandria:shuffle
        (split 5)))
+(defun print-hand (hand)
+  (->> hand cardset->str (format t "Hand=[~a]~%")))
+
+(defun read-redeal-print (hand deck)
+  (cond
+    ((<= (length deck) 5)
+     (cons hand deck))
+    ((null hand)
+     (destructuring-bind ((hand) . deck) (deal-hands 1 deck)
+       (print-hand hand)
+       (read-redeal-print hand deck)))
+    (t
+     (let ((indices (read-until-valid-integers)))
+       (if (null indices)
+           (cons hand deck)
+           (destructuring-bind (hand . deck) (redeal-hand hand indices deck)
+             (print-hand hand)
+             (read-redeal-print hand deck)))))))
 
 (defun start ()
   (setf *random-state* (make-random-state t))
