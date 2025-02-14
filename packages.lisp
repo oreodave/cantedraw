@@ -43,7 +43,9 @@
    ;; Comparators
    :suit< :rank< :card<
    ;; Serialisers
-   :suit->str :rank->str :card->str :cardset->str))
+   :suit->str :rank->str :card->str :cardset->str
+   ;; Constructors
+   :make-joker :make-deck))
 
 (defpackage cantedraw.main
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)

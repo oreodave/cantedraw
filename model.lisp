@@ -118,3 +118,17 @@
   (->> cardset
        (mapcar #'card->str)
        (format nil "~{~a~^, ~}")))
+
+(fn make-joker (&optional (rank :ACE)) (-> (&optional rank) card)
+  (cons rank :Joker))
+
+(fn make-deck (&optional (n 1)) (-> (&optional fixnum) cardset)
+  (append
+   (loop :for i :from 1 :to n
+         :nconc (loop :for j :from 1 :to 52
+                      collect (int->card (1- j))))
+   (loop :for i :from 1 :to n
+         :collect (->> i
+                       1-
+                       int->rank
+                       make-joker))))
