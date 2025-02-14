@@ -86,9 +86,15 @@
 
 (fn card< (c1 c2) (-> (card card) boolean)
   (destructuring-bind ((r1 . s1) (r2 . s2)) (list c1 c2)
-    (if (eq r1 r2)
-        (suit< s1 s2)
-        (rank< r1 r2))))
+    (cond
+      ;; Check for jokers!
+      ((and (eq s1 :Joker)
+            (eq s2 :Joker))
+       (rank< r1 r2))
+      ((eq s1 :Joker) nil)
+      ((eq s2 :Joker) t)
+      ((eq r1 r2) (suit< s1 s2))
+      (t (rank< r1 r2)))))
 
 (fn suit->str (suit) (-> (suit) string)
   (case suit
