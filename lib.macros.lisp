@@ -84,7 +84,7 @@ arguments `LAMBDA-LIST' with body `BODY'."
   "Given a sequence of FORMS, return a unary function which applies each form
 sequentially"
   `(lambda (x)
-     (->> x ,@(reverse forms))))
+     (->> x ,@forms)))
 
 (defmacro alist-val (key alist)
   "Helper macro for getting the value of KEY in ALIST."
