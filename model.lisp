@@ -76,3 +76,15 @@
     (->> (suit->int suit)
          (* 13)
          (+ (rank->int rank)))))
+
+(fn suit< (s1 s2) (-> (suit suit) boolean)
+  (< (suit->int s1) (suit->int s2)))
+
+(fn rank< (r1 r2) (-> (rank rank) boolean)
+  (< (rank->int r1) (rank->int r2)))
+
+(fn card< (c1 c2) (-> (card card) boolean)
+  (destructuring-bind ((r1 . s1) (r2 . s2)) (list c1 c2)
+    (if (eq r1 r2)
+        (suit< s1 s2)
+        (rank< r1 r2))))
