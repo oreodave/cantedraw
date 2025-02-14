@@ -20,7 +20,7 @@
 (defpackage cantedraw.lib.macros
   (:use :cl)
   (:export
-   :_ :--> :->>
+   :--> :->>
    :-> :fn
    :while :alist-val
    :$))

@@ -19,31 +19,31 @@
 
 (in-package :cantedraw.lib.macros)
 
-(defmacro --> (&rest forms)
-  "Lexically bind current form as `_' for use in the next form, returning the
-  result of the last form.
+(defmacro --> (placeholder &body forms)
+  "Lexically bind current form as `placeholder' for use in the next form, returning
+the result of the last form.
 
 i.e.
 
 (--> (a1 a2...) (b1 b2...) (c1 c2...)) =
-(let* ((_ (a1 a2 ...))
-       (_ (b1 b2 ...))
-       (_ (c1 c2 ...)))
+(let* ((placeholder (a1 a2 ...))
+       (placeholder (b1 b2 ...))
+       (placeholder (c1 c2 ...)))
     _ )
 
 Also includes transformer where symbols are considered unary functions i.e.
-(--> x y) <-> (--> x (y _)).
+(--> x y) <-> (--> x (y placeholder)).
 "
   (if (null forms)
       nil
       (let ((assignment-forms
               (loop :for f :in forms
                     :for canon-f := (if (symbolp f)
-                                        (list f 'cantedraw.lib.macros:_)
+                                        (list f placeholder)
                                         f)
-                    :collect `(cantedraw.lib.macros:_ ,canon-f))))
+                    :collect `(,placeholder ,canon-f))))
         `(let* ,assignment-forms
-           cantedraw.lib.macros:_))))
+           ,placeholder))))
 
 (defmacro ->> (&rest forms)
   "Make current form the last argument of the next form, returning the last

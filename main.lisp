@@ -44,6 +44,7 @@
     inp))
 
 (defun start ()
-  (--> (read-until-integers)
-       (cons '+ _)
-       (format t "~a = ~a~%" _ (eval _))))
+  (--> var
+    (read-until-integers)
+    (cons '+ var)
+    (format t "~a = ~a~%" var (eval var))))
