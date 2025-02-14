@@ -17,7 +17,7 @@
 
 ;;; Code:
 
-(in-package :lib.macros)
+(in-package :cantedraw.lib.macros)
 
 (defmacro --> (&rest forms)
   "Lexically bind current form as `_' for use in the next form, returning the
@@ -38,10 +38,12 @@ Also includes transformer where symbols are considered unary functions i.e.
       nil
       (let ((assignment-forms
               (loop :for f :in forms
-                    :for canon-f := (if (symbolp f) (list f 'lib.macros:_) f)
-                    :collect `(lib.macros:_ ,canon-f))))
+                    :for canon-f := (if (symbolp f)
+                                        (list f 'cantedraw.lib.macros:_)
+                                        f)
+                    :collect `(cantedraw.lib.macros:_ ,canon-f))))
         `(let* ,assignment-forms
-           lib.macros:_))))
+           cantedraw.lib.macros:_))))
 
 (defmacro ->> (&rest forms)
   "Make current form the last argument of the next form, returning the last

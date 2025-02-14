@@ -5,7 +5,7 @@
                (:file "main"))
   :build-operation "program-op"
   :build-pathname "bin/cantedraw"
-  :entry-point "main:start")
+  :entry-point "cantedraw.main:start")
 
 #+sb-core-compression
 (defmethod asdf:perform ((o asdf:image-op) (c asdf:system))

@@ -17,7 +17,7 @@
 
 ;;; Code:
 
-(defpackage lib.macros
+(defpackage cantedraw.lib.macros
   (:use :cl)
   (:export
    :_ :--> :->>
@@ -25,13 +25,13 @@
    :while :alist-val
    :$))
 
-(defpackage lib.functions
-  (:use :cl :lib.macros)
+(defpackage cantedraw.lib.functions
+  (:use :cl :cantedraw.lib.macros)
   (:export
    :parse-integer*
    :range :take :split
    :rev-map))
 
-(defpackage main
-  (:use :cl :lib.macros :lib.functions)
+(defpackage cantedraw.main
+  (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
   (:export :start))

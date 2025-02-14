@@ -13,12 +13,12 @@
 
 ;;; Commentary:
 
-;; Implementation of `main' package.  Defines the entrypoint of the program,
-;; handling any input from the user and passing it into the system.
+;; Defines the entrypoint of the program, handling any input from the user and
+;; passing it into the system.
 
 ;;; Code:
 
-(in-package :main)
+(in-package :cantedraw.main)
 
 (fn read-input (&optional (prompt "> ")) (-> (&optional string) string)
   (format t "~a" prompt)

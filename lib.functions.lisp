@@ -17,7 +17,7 @@
 
 ;;; Code:
 
-(in-package :lib.functions)
+(in-package :cantedraw.lib.functions)
 
 (fn range (start end &optional (step 1)) (-> (fixnum fixnum &optional fixnum) list)
   "Make a list of numbers from START to END (exclusive).  If STEP is given, then
