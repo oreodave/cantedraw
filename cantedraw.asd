@@ -1,9 +1,14 @@
 (asdf:defsystem :cantedraw
-  :depends-on (:deploy)
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
                (:file "cantedraw"))
-  :build-operation "deploy-op"
-  :build-pathname "cantedraw"
+  :build-operation "program-op"
+  :build-pathname "bin/cantedraw"
   :entry-point "cantedraw:start")
+
+#+sb-core-compression
+(defmethod asdf:perform ((o asdf:image-op) (c asdf:system))
+  (uiop:dump-image (asdf:output-file o c)
+                   :executable t
+                   :compression 9))

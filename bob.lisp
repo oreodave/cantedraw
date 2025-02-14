@@ -20,16 +20,13 @@
 
 (defpackage bob
   (:use :cl)
-  (:export
-   :build :load-all))
+  (:export :build :load-all))
 
 (in-package :bob)
 
-(ql:quickload :deploy)
 (asdf:load-asd (merge-pathnames "cantedraw.asd" (uiop:getcwd)))
 
 (defun build ()
-  (push :deploy-console *features*)
   (asdf:make :cantedraw))
 
 (defun load-all ()
