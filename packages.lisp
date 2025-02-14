@@ -34,7 +34,13 @@
 
 (defpackage cantedraw.model
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
-  (:export :int-card :rank :suit :card :cardset))
+  (:export
+   ;; Types
+   :int-card :rank :suit :card :cardset
+   ;; Converters
+   :int->suit :int->rank :int->card
+   :suit->int :rank->int :card->int
+   ))
 
 (defpackage cantedraw.main
   (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
