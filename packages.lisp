@@ -48,5 +48,7 @@
    :make-joker :make-deck))
 
 (defpackage cantedraw.main
-  (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
+  (:use :cl
+   :cantedraw.lib.macros :cantedraw.lib.functions
+   :cantedraw.model)
   (:export :start))

@@ -32,7 +32,8 @@
        (remove-if #'null)))
 
 (fn read-integers () (-> nil list)
-  (->> (read-input "Enter numbers: ")
+  (->> "Enter numbers: "
+       read-input
        parse-integers))
 
 (fn read-until-integers () (-> nil list)
@@ -43,8 +44,24 @@
       (setq inp (read-integers)))
     inp))
 
+(fn is-valid-hand-index (n) (-> (fixnum) boolean)
+  (and (< n 5)
+       (>= n 0)))
+
+(fn read-until-valid-integers () (-> nil list)
+  (let ((inp (remove-duplicates (read-integers))))
+    (while (not (every #'is-valid-hand-index inp))
+      (format t "Need at most 5 integers between 0 and 4...~%")
+      (force-output)
+      (setq inp (remove-duplicates (read-integers))))))
+
+(defun generate-hand ()
+  (->> (make-deck)
+       alexandria:shuffle
+       (split 5)))
+
 (defun start ()
-  (--> var
-    (read-until-integers)
-    (cons '+ var)
-    (format t "~a = ~a~%" var (eval var))))
+  (destructuring-bind (hand . rest) (generate-hand)
+    (declare (ignore rest))
+    (->> hand cardset->str (format t "Hand=[~a]~%"))
+    (force-output)))

@@ -1,4 +1,5 @@
 (asdf:defsystem :cantedraw
+  :depends-on (:alexandria)
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
