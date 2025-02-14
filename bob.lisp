@@ -18,16 +18,18 @@
 
 ;;; Code:
 
+(pushnew (truename (uiop:getcwd))
+         ql:*local-project-directories*)
+
 (defpackage bob
   (:use :cl)
   (:export :build :load-all))
 
 (in-package :bob)
 
-(asdf:load-asd (merge-pathnames "cantedraw.asd" (uiop:getcwd)))
+(defun load-all ()
+  (ql:quickload :cantedraw :verbose t))
 
 (defun build ()
+  (load-all)
   (asdf:make :cantedraw))
-
-(defun load-all ()
-  (asdf:load-system :cantedraw))
