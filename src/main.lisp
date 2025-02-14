@@ -58,6 +58,20 @@
       (setq inp (remove-duplicates (read-integers))))
     inp))
 
+(fn read-and-confirm-valid-integers (hand) (-> nil list)
+  (let ((confirm nil)
+        inp)
+    (while (null confirm)
+      (setq inp (read-until-valid-integers))
+      (if (null inp)
+          (format t "No redeal (end of game)~%")
+          (->> (loop :for index :in inp
+                     :collect (nth index hand))
+               cardset->str
+               (format t "To redeal: ~a~%")))
+      (setq confirm (y-or-n-p "Confirm: ")))
+    inp))
+
 (defun print-hand (hand)
   (->> hand cardset->str (format t "Hand=[~a]~%")))
 
@@ -70,7 +84,7 @@
        (print-hand hand)
        (read-redeal-print hand deck)))
     (t
-     (let ((indices (read-until-valid-integers)))
+     (let ((indices (read-and-confirm-valid-integers hand)))
        (if (null indices)
            (cons hand deck)
            (destructuring-bind (hand . deck) (redeal-hand hand indices deck)
