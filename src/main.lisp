@@ -64,6 +64,7 @@
        (split 5)))
 
 (defun start ()
+  (setf *random-state* (make-random-state t))
   (destructuring-bind (hand . rest) (generate-hand)
     (declare (ignore rest))
     (->> hand cardset->str (format t "Hand=[~a]~%"))
