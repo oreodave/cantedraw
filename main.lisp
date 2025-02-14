@@ -1,4 +1,4 @@
-;;; cantedraw.lisp - 2025-02-11
+;;; main.lisp - 2025-02-11
 
 ;; Copyright (C) 2025 Aryadev Chavali
 
@@ -13,12 +13,12 @@
 
 ;;; Commentary:
 
-;; Implementation of `cantedraw' package.  Defines the entrypoint of the program,
+;; Implementation of `main' package.  Defines the entrypoint of the program,
 ;; handling any input from the user and passing it into the system.
 
 ;;; Code:
 
-(in-package :cantedraw)
+(in-package :main)
 
 (fn read-input (&optional (prompt "> ")) (-> (&optional string) string)
   (format t "~a" prompt)

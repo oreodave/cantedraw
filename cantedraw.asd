@@ -2,10 +2,10 @@
   :components ((:file "packages")
                (:file "lib.macros")
                (:file "lib.functions")
-               (:file "cantedraw"))
+               (:file "main"))
   :build-operation "program-op"
   :build-pathname "bin/cantedraw"
-  :entry-point "cantedraw:start")
+  :entry-point "main:start")
 
 #+sb-core-compression
 (defmethod asdf:perform ((o asdf:image-op) (c asdf:system))
