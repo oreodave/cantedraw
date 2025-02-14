@@ -13,11 +13,12 @@
 
 ;;; Commentary:
 
-;; Little bit of code scaffolding that makes it easy to load or build the
-;; system.  Named after "Bob the Builder".
+;; Code scaffolding to make loading/building the system easy.  Named after "Bob
+;; the Builder".
 
 ;;; Code:
 
+;; Try and push the current directory into the quicklisp project directories.
 (pushnew (truename (uiop:getcwd))
          ql:*local-project-directories*)
 
@@ -27,9 +28,13 @@
 
 (in-package :bob)
 
+(defun init ()
+  (ql:quickload :cantedraw))
+
 (defun load-all ()
-  (ql:quickload :cantedraw :verbose t))
+  (init)
+  (asdf:load-system :cantedraw))
 
 (defun build ()
-  (load-all)
+  (init)
   (asdf:make :cantedraw))

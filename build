@@ -2,6 +2,7 @@
 
 set -xe
 
+rm -f ./bin/cantedraw
 sbcl --non-interactive \
      --load "./bob.lisp" \
      --eval "(bob:build)"

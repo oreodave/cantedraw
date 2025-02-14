@@ -16,3 +16,11 @@ Goals:
 - Games may have up to 12 players
 - Games may include bots
 - Bots have different ranks of difficulty
+
+Requirements:
+- Steele Bank Common Lisp (http://www.sbcl.org/)
+- Quick Lisp (https://www.quicklisp.org/beta/)
+
+Run:
+    $ ./build
+to compile the program.
