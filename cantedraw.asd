@@ -1,10 +1,14 @@
 (asdf:defsystem :cantedraw
   :depends-on (:alexandria)
   :components ((:file "packages")
-               (:file "lib.macros")
-               (:file "lib.functions")
-               (:file "model")
-               (:file "main"))
+               (:module "lib"
+                :components
+                ((:file "macros")
+                 (:file "functions")))
+               (:module "src"
+                :components
+                ((:file "model")
+                 (:file "main"))))
   :build-operation "program-op"
   :build-pathname "bin/cantedraw"
   :entry-point "cantedraw.main:start")
