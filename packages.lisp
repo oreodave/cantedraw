@@ -48,6 +48,18 @@
    ;; Constructors
    :make-joker :make-deck))
 
+(defpackage cantedraw.player
+  (:use :cl
+   :cantedraw.lib.macros :cantedraw.lib.functions
+   :cantedraw.model)
+  (:export
+   :player
+   :players
+   :player-id :player-balance :player-hand
+   :player-exists? :player-bankrupt? :player-can-bet?
+   :player-pay
+   :player-receive))
+
 (defpackage cantedraw.game
   (:use :cl
    :cantedraw.lib.macros :cantedraw.lib.functions

@@ -8,6 +8,7 @@
                (:module "src"
                 :components
                 ((:file "model")
+                 (:file "player")
                  (:file "game")
                  (:file "main"))))
   :build-operation "program-op"
