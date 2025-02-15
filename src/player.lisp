@@ -19,21 +19,16 @@
 
 (in-package :cantedraw.player)
 
-(defun playerp (x)
-  (and (typep (car x) 'fixnum)
-       (typep (cadr x) 'fixnum)
-       (typep (caddr x) 'cardset)))
-
-(deftype player () `(and cons (satisfies playerp)))
-
-(deftype players () 'list)
+(defstruct player
+  (name   "Yunkyu" :type string)
+  (balance 0       :type integer)
+  (hand    nil       :type (or nil cardset)))
 
 (define-condition error-player-nonexistent (error)
   ((id :initarg :id :reader id))
   (:report
    (lambda (err stream)
-     (format stream "Player [~a] is non-existent or malformed"
-             (id err)))))
+     (format stream "Player [~a] is non-existent or malformed" (id err)))))
 
 (define-condition error-player-broke (error)
   ((id :initarg :id :reader id)
@@ -42,44 +37,33 @@
   (:report
    (lambda (err stream)
      (format stream "Player [~a] has balance $~a but $~a requested."
-             (id err)
-             (balance err)
-             (required err)))))
+             (id err) (balance err) (required err)))))
 
+(fn player-exists? (id table) (-> (symbol hash-table) boolean)
+  (if (or (null (gethash id table))
+          (not (player-p (gethash id table))))
+      (error 'error-player-nonexistent :id id)
+      t))
 
-(fn player-id (player) (-> (player) fixnum)
-  (car player))
+(fn player-can-pay? (id table amount) (-> (symbol hash-table fixnum) boolean)
+  (player-exists? id table)
+  (->> (gethash id table) player-balance (<= amount)))
 
-(fn player-balance (player) (-> (player) fixnum)
-  (cadr player))
+(fn player-bankrupt? (id table) (-> (symbol hash-table) boolean)
+  (player-exists? id table)
+  (->> (gethash id table) player-balance (>= 0)))
 
-(fn player-hand (player) (-> (player) cardset)
-  (caddr player))
+(fn player-debit (id table amount) (-> (symbol hash-table fixnum) fixnum)
+  (player-exists? id table)
+  (if (not (player-can-pay? id table amount))
+      (error 'error-player-broke
+             :id id :balance (player-balance (gethash id table)) :required amount))
+  (decf (player-balance (gethash id table)) amount))
 
-(fn player-exists? (id players) (-> (fixnum players) boolean)
-  (assoc id players))
+(fn player-credit (id table amount) (-> (symbol hash-table fixnum) fixnum)
+  (player-exists? id table)
+  (incf (player-balance (gethash id table)) amount))
 
-(fn player-bankrupt? (player) (-> (player) boolean)
-  (<= (cadr player) 0))
-
-(fn player-can-bet? (min-bet player) (-> (fixnum player) boolean)
-  (>= (cadr player) min-bet))
-
-(fn player-pay (id amount players) (-> (fixnum fixnum players) players)
-  (let ((p (assoc id players)))
-    (if (not (typep p 'player))
-        (error 'error-player-nonexistent :id id))
-    (if (not (player-can-bet? amount p))
-        (error 'error-player-broke
-               :id id
-               :balance (player-balance p)
-               :required amount))
-    (decf (cadr (assoc id players)) amount))
-  players)
-
-(fn player-receive (id amount players) (-> (fixnum fixnum players) players)
-  (let ((p (assoc id players)))
-    (if (not (typep p 'player))
-        (error 'error-player-nonexistent :id id))
-    (incf (cadr (assoc id players)) amount)
-    players))
+(fn player-set-cards (id table cards) (-> (symbol hash-table cardset) t)
+  (player-exists? id table)
+  (setf (player-hand (gethash id table)) cards))

@@ -58,13 +58,12 @@
    :5d.model)
   (:export
    :player
-   :players
    :error-player-nonexistent
    :error-player-broke
-   :player-id :player-balance :player-hand
-   :player-exists? :player-bankrupt? :player-can-bet?
-   :player-pay
-   :player-receive))
+   :player-exists? :player-bankrupt? :player-can-pay?
+   :player-debit
+   :player-credit
+   :player-set-cards))
 
 (defpackage cantedraw.game
   (:nicknames :5d.game)
