@@ -133,5 +133,5 @@
    (loop :for _ :from 1 :to n
          :nconc (loop :for j :from 1 :to 52
                       collect (int->card (1- j))))
-   (mapcar ($ int->rank make-joker)
+   (mapcar ($ x int->rank make-joker)
       (range 0 (* 2 n)))))

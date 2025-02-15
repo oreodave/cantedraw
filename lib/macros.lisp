@@ -80,11 +80,11 @@ arguments `LAMBDA-LIST' with body `BODY'."
      (defun ,name ,lambda-list
        ,@body)))
 
-(defmacro $ (&rest forms)
+(defmacro $ (capture &rest forms)
   "Given a sequence of FORMS, return a unary function which applies each form
 sequentially"
-  `(lambda (x)
-     (->> x ,@forms)))
+  `(lambda (,capture)
+     (->> ,capture ,@forms)))
 
 (defmacro alist-val (key alist)
   "Helper macro for getting the value of KEY in ALIST."
