@@ -15,7 +15,8 @@
   :build-pathname "bin/cantedraw"
   :entry-point "cantedraw.main:start")
 
-#+sb-core-compression
+;; Compress image for smaller binary size.
+#+nil
 (defmethod asdf:perform ((o asdf:image-op) (c asdf:system))
   (uiop:dump-image (asdf:output-file o c)
                    :executable t
