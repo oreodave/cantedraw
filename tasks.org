@@ -1,0 +1,35 @@
+#+title: Tasks
+#+author: Aryadev Chavali
+#+date: 2025-02-15
+
+* TODO Simulate the 3 rounds in a game
+1) Initial betting after dealing cards
+2) Re-deal
+3) Final round of betting
+
+We need to deal with folds in rounds (1) and (3).
+
+** TODO MVP: Simulate without financing
+** TODO Financing
+Each game has:
++ Small and big blind
++ Betting based on largest bet on board
+
+So we need to maintain a finance profile of every player to figure out
+if they have enough to play the current round:
++ if start of round and one of the blinds, can they pay the blind?
++ if betting comes to them, do they have enough to at least match the
+  current bet?
++ if they raise, how much can they raise by?
+
+Finally, we need to payout at the end of a round.
+* TODO Make a poker bot
+Simple metrics for a bot to consider:
++ Strength of initial hand
+  + Chances of stronger hand on re-deal
++ Personal finance
+
+Complex optional metrics:
++ Behaviours of other players:
+  + Pot sizes
+  + Behaviour on each round (do they go for every blind?)
