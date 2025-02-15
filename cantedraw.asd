@@ -1,4 +1,6 @@
-(asdf:defsystem :cantedraw
+(asdf:defsystem "cantedraw"
+  :author "Aryadev Chavali <aryadev@aryadevchavali.com>"
+  :license "GPL-2"
   :depends-on (:alexandria)
   :components ((:file "packages")
                (:module "lib"
