@@ -28,6 +28,25 @@
 
 (deftype players () 'list)
 
+(define-condition error-player-nonexistent (error)
+  ((id :initarg :id :reader id))
+  (:report
+   (lambda (err stream)
+     (format stream "Player [~a] is non-existent or malformed"
+             (id err)))))
+
+(define-condition error-player-broke (error)
+  ((id :initarg :id :reader id)
+   (balance :initarg :balance :reader balance)
+   (required :initarg :required :reader required))
+  (:report
+   (lambda (err stream)
+     (format stream "Player [~a] has balance $~a but $~a requested."
+             (id err)
+             (balance err)
+             (required err)))))
+
+
 (fn player-id (player) (-> (player) fixnum)
   (car player))
 
@@ -50,10 +69,13 @@
   (let ((p (assoc id players)))
     (cond
       ((not (typep p 'player))
-       (error "Player [~a] does not exist."))
+       (error 'error-player-nonexistent
+              :id id))
       ((not (player-can-bet? amount p))
-       (error "Player [~a] has $~a but needs to pay ~a."
-              id (player-balance p) amount))
+       (error 'error-player-broke
+              :id id
+              :balance (player-balance p)
+              :required amount))
       (t
        (destructuring-bind (id balance cards) p
          (setf (cdr (assoc id players))

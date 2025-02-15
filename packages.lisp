@@ -55,6 +55,8 @@
   (:export
    :player
    :players
+   :error-player-nonexistent
+   :error-player-broke
    :player-id :player-balance :player-hand
    :player-exists? :player-bankrupt? :player-can-bet?
    :player-pay
