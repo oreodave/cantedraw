@@ -67,28 +67,19 @@
 
 (fn player-pay (id amount players) (-> (fixnum fixnum players) players)
   (let ((p (assoc id players)))
-    (cond
-      ((not (typep p 'player))
-       (error 'error-player-nonexistent
-              :id id))
-      ((not (player-can-bet? amount p))
-       (error 'error-player-broke
-              :id id
-              :balance (player-balance p)
-              :required amount))
-      (t
-       (destructuring-bind (id balance cards) p
-         (setf (cdr (assoc id players))
-               (list (- balance amount) cards)))))
-    players))
+    (if (not (typep p 'player))
+        (error 'error-player-nonexistent :id id))
+    (if (not (player-can-bet? amount p))
+        (error 'error-player-broke
+               :id id
+               :balance (player-balance p)
+               :required amount))
+    (decf (cadr (assoc id players)) amount))
+  players)
 
-(fn player-receive (id amount players)
-    (-> (fixnum fixnum players) players)
+(fn player-receive (id amount players) (-> (fixnum fixnum players) players)
   (let ((p (assoc id players)))
     (if (not (typep p 'player))
-        (error 'error-player-nonexistent
-               :id id))
-    (destructuring-bind (id balance cards) p
-      (setf (cdr (assoc id players))
-            (list (+ balance amount) cards)))
+        (error 'error-player-nonexistent :id id))
+    (incf (cadr (assoc id players)) amount)
     players))
