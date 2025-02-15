@@ -24,17 +24,13 @@
 
 (defpackage bob
   (:use :cl)
-  (:export :build :load-all))
+  (:export :build :qload))
 
 (in-package :bob)
 
-(defun init ()
+(defun qload ()
   (ql:quickload :cantedraw))
 
-(defun load-all ()
-  (init)
-  (asdf:load-system :cantedraw))
-
 (defun build ()
-  (init)
+  (qload)
   (asdf:make :cantedraw))
