@@ -30,10 +30,10 @@
 
 (deftype int-card () `(integer 0 51))
 
+(deftype cardset () `(and list (satisfies cardsetp)))
+
 (fn cardsetp (lst) (-> (list) boolean)
   (every #'(lambda (x) (typep x 'card)) lst))
-
-(deftype cardset () `(and list (satisfies cardsetp)))
 
 (fn int->suit (n) (-> (int-card) suit)
   (case (floor n 13)

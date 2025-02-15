@@ -9,7 +9,7 @@
 
 We need to deal with folds in rounds (1) and (3).
 
-** TODO MVP: Simulate without financing
+** WIP MVP: Simulate without financing
 ** TODO Financing
 Each game has:
 + Small and big blind
