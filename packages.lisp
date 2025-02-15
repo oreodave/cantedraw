@@ -18,6 +18,7 @@
 ;;; Code:
 
 (defpackage cantedraw.lib.macros
+  (:nicknames :5d-lib.macros)
   (:use :cl)
   (:export
    :--> :->>
@@ -26,7 +27,8 @@
    :$))
 
 (defpackage cantedraw.lib.functions
-  (:use :cl :cantedraw.lib.macros)
+  (:nicknames :5d-lib.functions)
+  (:use :cl :5d-lib.macros)
   (:export
    :parse-integer*
    :range :take :split
@@ -34,7 +36,8 @@
    :remove-at-indices))
 
 (defpackage cantedraw.model
-  (:use :cl :cantedraw.lib.macros :cantedraw.lib.functions)
+  (:nicknames :5d.model)
+  (:use :cl :5d-lib.macros :5d-lib.functions)
   (:export
    ;; Types
    :int-card :rank :suit :card :cardset
@@ -49,9 +52,10 @@
    :make-joker :make-deck))
 
 (defpackage cantedraw.player
+  (:nicknames :5d.player)
   (:use :cl
-   :cantedraw.lib.macros :cantedraw.lib.functions
-   :cantedraw.model)
+   :5d-lib.macros :5d-lib.functions
+   :5d.model)
   (:export
    :player
    :players
@@ -63,16 +67,18 @@
    :player-receive))
 
 (defpackage cantedraw.game
+  (:nicknames :5d.game)
   (:use :cl
-   :cantedraw.lib.macros :cantedraw.lib.functions
-   :cantedraw.model)
+   :5d-lib.macros :5d-lib.functions
+   :5d.model)
   (:export
    :deal-cards
    :deal-hands
    :redeal-hand))
 
 (defpackage cantedraw.main
+  (:nicknames :5d.main)
   (:use :cl
-   :cantedraw.lib.macros :cantedraw.lib.functions
-   :cantedraw.model :cantedraw.game)
+   :5d-lib.macros :5d-lib.functions
+   :5d.model :5d.game)
   (:export :start))
