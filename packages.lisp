@@ -21,7 +21,7 @@
   (:nicknames :5d-lib.macros)
   (:use :cl)
   (:export
-   :--> :->>
+   :--> :->> :-<>
    :-> :fn
    :while :alist-val
    :$))

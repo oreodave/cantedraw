@@ -63,6 +63,26 @@ Like the `|>' operator in Ocaml."
             :do (setq acc (append canon-func (list acc)))
             :finally (return acc))))
 
+
+(defmacro -<> (&rest forms)
+  "Make current form the first argument of the next form, returning the last
+  form.
+
+i.e.
+(-<> (a1 a2...) (b1 b2...) (c1 c2...)) == (c1 (b1 (a1 a2 ...) b2 ...) c2 ...)
+
+Also includes transformer where symbols are considered unary functions.
+
+Like the `|>' operator in Ocaml."
+  (if (null forms)
+      nil
+      (loop :with acc = (car forms)
+            :for func :in (cdr forms)
+            :for canon-func = (if (symbolp func) (list func) func)
+            :do (push acc (cdr canon-func))
+            :do (setq acc canon-func)
+            :finally (return acc))))
+
 (defmacro while (condition &body body)
   `(loop :while ,condition
          :do
