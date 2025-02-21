@@ -30,3 +30,12 @@
   (is eq nil    (parse-integer* "a2048abcdef"))
   (is eq nil    (parse-integer* "garbage"))
   (fail       (parse-integer* nil)))
+
+(define-test (function-test range)
+  :compile-at :execute
+  (fail (range 1 0))
+  (fail (range nil nil))
+  (fail (range "a" "b"))
+  (true (null (range 1 1)))
+  (is equal '(1 2 3 4)    (range 1 5))
+  (is equal '(-3 -2 -1 0) (range -3 1)))

@@ -22,7 +22,7 @@
 (fn range (start end &optional (step 1)) (-> (fixnum fixnum &optional fixnum) list)
   "Make a list of numbers from START to END (exclusive).  If STEP is given, then
 each member is STEP distance apart."
-  (if (<= end start)
+  (if (< end start)
       (error (format nil "~a < ~a" end start))
       (loop :for i :from start :to (1- end) :by step
             :collect i)))
