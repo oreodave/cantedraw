@@ -1,4 +1,4 @@
-;;; main.lisp - 2025-02-20
+;;; functions.lisp - 2025-02-20
 
 ;; Copyright (C) 2025 Aryadev Chavali
 
@@ -11,15 +11,14 @@
 ;; Public License Version 2, which you should have received a copy of along with
 ;; this program.  If not, please go to <https://www.gnu.org/licenses/>.
 
-
 ;;; Code:
 
-(defpackage cantedraw/tests/main
-  (:use :cl :parachute))
+(defpackage cantedraw/tests/functions
+  (:use
+   :cl :parachute :cantedraw.lib.macros
+   :cantedraw.lib.functions))
 
-(in-package :cantedraw/tests/main)
+(in-package :cantedraw/tests/functions)
 
-(define-test all
-  :serial t
-  :depends-on ((cantedraw/tests/macros macro-test)
-               (cantedraw/tests/functions function-test)))
+(define-test function-test
+  :depends-on ((cantedraw/tests/macros macro-test)))

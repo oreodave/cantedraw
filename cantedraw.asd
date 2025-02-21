@@ -26,7 +26,7 @@
   :components ((:module "tests"
                 :components
                 ((:file "macros")
-                 ;; (:file "functions")
+                 (:file "functions")
                  ;; (:file "model")
                  ;; (:file "player")
                  ;; (:file "game")
