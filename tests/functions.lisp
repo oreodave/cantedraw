@@ -22,3 +22,11 @@
 
 (define-test function-test
   :depends-on ((cantedraw/tests/macros macro-test)))
+
+(define-test (function-test "parse-integer*")
+  :compile-at :execute
+  (is eq 2    (parse-integer* "2"))
+  (is eq 2048 (parse-integer* "2048abcdef"))
+  (is eq nil    (parse-integer* "a2048abcdef"))
+  (is eq nil    (parse-integer* "garbage"))
+  (fail       (parse-integer* nil)))
