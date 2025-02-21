@@ -31,10 +31,10 @@ each member is STEP distance apart."
   "Return the first N elements of LST."
   (subseq lst 0 n))
 
-(fn split (n lst) (-> (fixnum list) list)
+(fn split (n lst) (-> (fixnum sequence) (values sequence sequence))
   "Return CONS where CAR is the first N elements of LST and CDR is the rest."
-  (cons (take n lst)
-        (subseq lst n)))
+  (values (take n lst)
+          (subseq lst n)))
 
 (fn rev-map (indicator lst &key (key-eq #'eq))
     (-> (function list &key (:key-eq function)) list)

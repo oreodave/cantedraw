@@ -48,3 +48,18 @@
   (true (->> (list 1 2 3 4) (take 0) null))
   (is equal "H" (take 1 "Hello"))
   (is equal '(1 2) (take 2 '(1 2 3 4 5))))
+
+(define-test (function-test split)
+  :compile-at :execute
+  (fail (split nil nil))
+  (fail (split 100 nil))
+  (fail (split nil 100))
+  (is-values (split 0 '(1 2 3 4))
+    (eq nil)
+    (equal '(1 2 3 4)))
+  (is-values (split 1 '(1 2 3 4))
+    (equal '(1))
+    (equal '(2 3 4)))
+  (is-values (split 5 "Hello World")
+    (string= "Hello")
+    (string= " World")))
