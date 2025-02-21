@@ -1,4 +1,4 @@
-;;; bob.lisp - 2025-02-10
+;;; main.lisp - 2025-02-20
 
 ;; Copyright (C) 2025 Aryadev Chavali
 
@@ -11,30 +11,14 @@
 ;; Public License Version 2, which you should have received a copy of along with
 ;; this program.  If not, please go to <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;; Code scaffolding to make loading/building the system easy.  Named after "Bob
-;; the Builder".
 
 ;;; Code:
 
-;; Try and push the current directory into the quicklisp project directories.
-(pushnew (truename (uiop:getcwd))
-         ql:*local-project-directories*)
+(defpackage cantedraw/tests/main
+  (:use :cl :parachute))
 
-(defpackage bob
-  (:use :cl)
-  (:export :build :qload :tests))
+(in-package :cantedraw/tests/main)
 
-(in-package :bob)
-
-(defun qload ()
-  (ql:quickload :cantedraw))
-
-(defun tests ()
-  (qload)
-  (asdf:test-system :cantedraw))
-
-(defun build ()
-  (tests)
-  (asdf:make :cantedraw))
+(define-test all
+  :serial t
+  :depends-on ((cantedraw/tests/macros macro-test)))
