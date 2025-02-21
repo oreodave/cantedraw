@@ -27,7 +27,7 @@
                 :components
                 ((:file "macros")
                  (:file "functions")
-                 ;; (:file "model")
+                 (:file "model")
                  ;; (:file "player")
                  ;; (:file "game")
                  (:file "main"))))
