@@ -25,3 +25,21 @@
 (define-test model-test
   :depends-on ((cantedraw/tests/macros macro-test)
                (cantedraw/tests/functions function-test)))
+
+(define-test (model-test int->suit)
+  :compile-at :execute
+  (fail (int->suit nil))
+  (fail (int->suit "Not a number"))
+  ;; Proving int->suit splits 0-51 perfectly between the 4 suits
+  (let ((mapping (rev-map #'int->suit (range 0 53))))
+    (is eq 5 (length mapping))
+    (let ((spades   (alist-val :spades mapping))
+          (hearts   (alist-val :hearts mapping))
+          (clubs    (alist-val :clubs mapping))
+          (diamonds (alist-val :diamonds mapping))
+          (jokers   (alist-val :joker mapping)))
+      (is eq 1 (length jokers))
+      (is eq 1 (->> (list spades hearts clubs diamonds)
+                    (mapcar #'length)
+                    remove-duplicates
+                    length)))))
