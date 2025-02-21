@@ -39,3 +39,12 @@
   (true (null (range 1 1)))
   (is equal '(1 2 3 4)    (range 1 5))
   (is equal '(-3 -2 -1 0) (range -3 1)))
+
+(define-test (function-test take)
+  :compile-at :execute
+  (fail (take nil nil))
+  (fail (take 100 nil))
+  (fail (take nil 100))
+  (true (->> (list 1 2 3 4) (take 0) null))
+  (is equal "H" (take 1 "Hello"))
+  (is equal '(1 2) (take 2 '(1 2 3 4 5))))

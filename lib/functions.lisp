@@ -27,7 +27,7 @@ each member is STEP distance apart."
       (loop :for i :from start :to (1- end) :by step
             :collect i)))
 
-(fn take (n lst) (-> (fixnum list) list)
+(fn take (n lst) (-> (fixnum sequence) sequence)
   "Return the first N elements of LST."
   (subseq lst 0 n))
 
