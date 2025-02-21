@@ -37,11 +37,11 @@ each member is STEP distance apart."
           (subseq lst n)))
 
 (fn rev-map (indicator lst &key (key-eq #'eq))
-    (-> (function list &key (:key-eq function)) list)
+    (-> (function sequence &key (:key-eq function)) list)
   "Given LST and INDICATOR: LST -> A, return an association list A -> 2^LST
 where key x in A has associations {y in LST : INDICATOR(y) = x}."
   (loop :with assoc-list := nil
-        :for element :in lst
+        :for element :in (coerce lst 'list)
         :for key := (funcall indicator element)
         :if (assoc key assoc-list :test key-eq)
           :do (->> (alist-val key assoc-list)
