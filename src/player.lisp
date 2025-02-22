@@ -40,30 +40,32 @@
              (id err) (balance err) (required err)))))
 
 (fn player-exists? (id table) (-> (symbol hash-table) boolean)
-  (if (or (null (gethash id table))
-          (not (player-p (gethash id table))))
-      (error 'error-player-nonexistent :id id)
-      t))
+  (and (gethash id table)
+       (player-p (gethash id table))))
+
+(defun error-if-no-player (id table)
+  (unless (player-exists? id table)
+    (error 'error-player-nonexistent :id id)))
 
 (fn player-can-pay? (id table amount) (-> (symbol hash-table fixnum) boolean)
-  (player-exists? id table)
+  (error-if-no-player id table)
   (->> (gethash id table) player-balance (<= amount)))
 
 (fn player-bankrupt? (id table) (-> (symbol hash-table) boolean)
-  (player-exists? id table)
+  (error-if-no-player id table)
   (->> (gethash id table) player-balance (>= 0)))
 
 (fn player-debit (id table amount) (-> (symbol hash-table fixnum) fixnum)
-  (player-exists? id table)
-  (if (not (player-can-pay? id table amount))
-      (error 'error-player-broke
-             :id id :balance (player-balance (gethash id table)) :required amount))
+  (error-if-no-player id table)
+  (unless (player-can-pay? id table amount)
+    (error 'error-player-broke
+           :id id :balance (player-balance (gethash id table)) :required amount))
   (decf (player-balance (gethash id table)) amount))
 
 (fn player-credit (id table amount) (-> (symbol hash-table fixnum) fixnum)
-  (player-exists? id table)
+  (error-if-no-player id table)
   (incf (player-balance (gethash id table)) amount))
 
 (fn player-set-cards (id table cards) (-> (symbol hash-table cardset) t)
-  (player-exists? id table)
+  (error-if-no-player id table)
   (setf (player-hand (gethash id table)) cards))
