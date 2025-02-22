@@ -29,7 +29,8 @@
 (in-package :bob)
 
 (defun qload ()
-  (ql:quickload :cantedraw))
+  (ql:quickload :cantedraw)
+  (ql:quickload :cantedraw/tests))
 
 (defun tests ()
   (qload)
