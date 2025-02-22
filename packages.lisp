@@ -40,16 +40,18 @@
   (:use :cl :5d-lib.macros :5d-lib.functions)
   (:export
    ;; Types
-   :int-card :rank :suit :card :cardset
+   :int-card :rank :suit :cardset
+   ;; card struct
+   :card :make-card :card-suit :card-rank :card-p
    ;; Converters
    :int->suit :int->rank :int->card
    :suit->int :rank->int :card->int
    ;; Comparators
    :suit< :rank< :card<
    ;; Serialisers
-   :suit->str :rank->str :card->str :cardset->str
+   :suit->str :rank->str :cardset->str
    ;; Constructors
-   :make-joker :make-deck))
+   :make-deck))
 
 (defpackage cantedraw.player
   (:nicknames :5d.player)

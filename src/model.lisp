@@ -26,16 +26,18 @@
 (deftype suit ()
   `(member :Diamonds :Clubs :Hearts :Spades :Joker))
 
-(deftype card () `(cons rank suit))
+(defstruct card
+  (rank :Ace   :type rank)
+  (suit :Joker :type suit))
 
 (deftype int-card () `(integer 0 51))
 
 (deftype cardset () `(and list (satisfies cardsetp)))
 
 (fn cardsetp (lst) (-> (list) boolean)
-  (every #'(lambda (x) (typep x 'card)) lst))
+  (every #'card-p lst))
 
-(fn int->suit (n) (-> (int-card) suit)
+(fn int->suit (n) (-> (fixnum) suit)
   (case (floor n 13)
     (0 :Diamonds)
     (1 :Clubs)
@@ -51,7 +53,7 @@
     (:Spades   3)
     (t         4)))
 
-(fn int->rank (n) (-> (int-card) rank)
+(fn int->rank (n) (-> (fixnum) rank)
   (let ((n (mod n 13)))
     (case n
       (9 :Jack)
@@ -68,15 +70,17 @@
     (:Ace    12)
     (t      (- rank 2))))
 
-(fn int->card (num) (-> (int-card) card)
-  (cons (int->rank num)
-        (int->suit num)))
+(fn int->card (num) (-> (fixnum) card)
+  (make-card :rank (int->rank num)
+             :suit (int->suit num)))
 
 (fn card->int (card) (-> (card) int-card)
-  (destructuring-bind (rank . suit) card
-    (->> (suit->int suit)
-         (* 13)
-         (+ (rank->int rank)))))
+  (with-slots ((rank rank) (suit suit)) card
+    (let ((rank (rank->int rank))
+          (suit (suit->int suit)))
+      (->> suit
+           (* 13)
+           (+ rank)))))
 
 (fn suit< (s1 s2) (-> (suit suit) boolean)
   (< (suit->int s1) (suit->int s2)))
@@ -85,16 +89,17 @@
   (< (rank->int r1) (rank->int r2)))
 
 (fn card< (c1 c2) (-> (card card) boolean)
-  (destructuring-bind ((r1 . s1) (r2 . s2)) (list c1 c2)
-    (cond
-      ;; Check for jokers!
-      ((and (eq s1 :Joker)
-            (eq s2 :Joker))
-       (rank< r1 r2))
-      ((eq s1 :Joker) nil)
-      ((eq s2 :Joker) t)
-      ((eq r1 r2) (suit< s1 s2))
-      (t (rank< r1 r2)))))
+  (with-slots ((r1 rank) (s1 suit)) c1
+    (with-slots ((r2 rank) (s2 suit)) c2
+      (cond
+        ;; Check for jokers!
+        ((and (eq s1 :Joker)
+              (eq s2 :Joker))
+         (rank< r1 r2))
+        ((eq s1 :Joker) nil)
+        ((eq s2 :Joker) t)
+        ((eq r1 r2) (suit< s1 s2))
+        (t (rank< r1 r2))))))
 
 (fn suit->str (suit) (-> (suit) string)
   (case suit
@@ -112,26 +117,21 @@
     (:King  "King")
     (t      (format nil "~a" rank))))
 
-(fn card->str (card) (-> (card) string)
-  (destructuring-bind (rank . suit) card
+(defmethod print-object ((card card) s)
+  (with-slots ((rank rank) (suit suit)) card
     (if (eq suit :Joker)
-        "Joker"
-        (format nil "~a[~a]"
+        (format s "Joker")
+        (format s "~a[~a]"
                 (rank->str rank)
                 (suit->str suit)))))
 
 (fn cardset->str (cardset) (-> (cardset) string)
-  (->> cardset
-       (mapcar #'card->str)
-       (format nil "~{~a~^, ~}")))
-
-(fn make-joker (&optional (rank :ACE)) (-> (&optional rank) card)
-  (cons rank :Joker))
+  (format nil "~{~a~^, ~}" cardset))
 
 (fn make-deck (&optional (n 1)) (-> (&optional fixnum) cardset)
   (append
    (loop :for _ :from 1 :to n
          :nconc (loop :for j :from 1 :to 52
                       collect (int->card (1- j))))
-   (mapcar ($ x int->rank make-joker)
-      (range 0 (* 2 n)))))
+   (loop :for _ :from 1 :to (* 2 n)
+         :collect (make-card))))
