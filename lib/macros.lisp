@@ -37,8 +37,9 @@ Also includes transformer where symbols are considered unary functions i.e.
   (if (null forms)
       nil
       (let ((assignment-forms
-              (loop :for f :in forms
-                    :for canon-f := (if (symbolp f)
+              (loop :for i :from 0
+                    :for f :in forms
+                    :for canon-f := (if (and (> i 0) (symbolp f))
                                         (list f placeholder)
                                         f)
                     :collect `(,placeholder ,canon-f))))
