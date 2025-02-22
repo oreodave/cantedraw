@@ -101,11 +101,25 @@ arguments `LAMBDA-LIST' with body `BODY'."
      (defun ,name ,lambda-list
        ,@body)))
 
-(defmacro $ (capture &rest forms)
+(defmacro $-> (capture &rest forms)
   "Given a sequence of FORMS, return a unary function which applies each form
-sequentially"
+sequentially via -->"
   `(lambda (,capture)
-     (->> ,capture ,@forms)))
+     (--> ,capture ,capture ,@forms)))
+
+(defmacro $<> (&rest forms)
+  "Given a sequence of FORMS, return a unary function which applies each form
+sequentially via -<>"
+  (let ((capture (gensym)))
+    `(lambda (,capture)
+       (-<> ,capture ,@forms))))
+
+(defmacro $>> (&rest forms)
+  "Given a sequence of FORMS, return a unary function which applies each form
+sequentially via ->>"
+  (let ((capture (gensym)))
+    `(lambda (,capture)
+       (->> ,capture ,@forms))))
 
 (defmacro alist-val (key alist)
   "Helper macro for getting the value of KEY in ALIST."

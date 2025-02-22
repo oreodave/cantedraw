@@ -24,7 +24,7 @@
    :--> :->> :-<>
    :-> :fn
    :while :alist-val
-   :$))
+   :$-> :$>> :$<>))
 
 (defpackage cantedraw.lib.functions
   (:nicknames :5d-lib.functions)
