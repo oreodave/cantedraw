@@ -17,16 +17,15 @@
   (:use
    :cl :parachute
    :cantedraw.lib.macros :cantedraw.lib.functions
-   :cantedraw/tests/functions
    :cantedraw.model))
 
 (in-package :cantedraw/tests/model)
 
-(define-test model-test
-  :depends-on ((cantedraw/tests/macros macro-test)
-               (cantedraw/tests/functions function-test)))
+(define-test model-test)
 
 (define-test (model-test int->suit)
+  :depends-on ((cantedraw/tests/macros ->>)
+               (cantedraw/tests/functions rev-map))
   :compile-at :execute
   (fail (int->suit nil))
   (fail (int->suit "Not a number"))

@@ -20,8 +20,7 @@
 
 (in-package :cantedraw/tests/functions)
 
-(define-test function-test
-  :depends-on ((cantedraw/tests/macros macro-test)))
+(define-test function-test)
 
 (define-test (function-test "parse-integer*")
   :compile-at :execute
@@ -41,6 +40,7 @@
   (is equal '(-3 -2 -1 0) (range -3 1)))
 
 (define-test (function-test take)
+  :depends-on ((cantedraw/tests/macros ->>))
   :compile-at :execute
   (fail (take nil nil))
   (fail (take 100 nil))
@@ -65,7 +65,8 @@
     (string= " World")))
 
 (define-test (function-test rev-map)
-  :depends-on (range)
+  :depends-on (range
+               (cantedraw/tests/macros ->>))
   :compile-at :execute
   (fail (rev-map nil nil))
   (fail (rev-map "a string" "another string" :key-eq "not a function"))
