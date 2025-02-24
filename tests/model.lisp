@@ -44,6 +44,21 @@
                   (append (range 2 11))
                   (mapcar (lambda (rank) (assoc rank mapping))))))))
 
+(define-test (model-test rank->int)
+  :depends-on ((cantedraw/tests/macros ->>))
+  :compile-at :execute
+  (fail (rank->int nil))
+  (fail (rank->int 1738))
+  (fail (rank->int "not a rank"))
+  (fail (rank->int :still-not-a-rank))
+  ;; Prove ranks are mapped to unique positive integers
+  (let ((res (->> (list :jack :queen :king :ace)
+                  (append (range 2 11))
+                  (mapcar #'rank->int))))
+    (true (every #'integerp res))
+    (true (every #'(lambda (x) (<= 0 x)) res))
+    (is equal (length res) (length (remove-duplicates res)))))
+
 (define-test (model-test int->suit)
   :depends-on ((cantedraw/tests/macros ->>)
                (cantedraw/tests/functions rev-map))
