@@ -132,3 +132,27 @@
         :do (true (every (lambda (c) (eq :joker (card-suit c))) inp)
                   "Are jokers.")))
 
+(define-test (model-test card->int)
+  :depends-on ((cantedraw/tests/functions range))
+  :compile-at :execute
+  (fail (card->int nil))
+  (fail (card->int 1738))
+  (fail (card->int "not a card"))
+  (fail (card->int :still-not-a-card))
+  (let ((ranks (append (range 2 11) (list :jack :queen :king :ace))))
+    (let ((res (->> (loop :for suit :in (list :diamonds :clubs :hearts :spades)
+                          :nconc
+                          (mapcar (lambda (rank) (make-card :rank rank :suit suit)) ranks))
+                    (mapcar #'card->int))))
+      (true (every #'integerp res) "Every mapped element is an integer.")
+      (true (every #'(lambda (x) (<= 0 x)) res) "Every mapped element is positive")
+      (is eq (length res) (length (remove-duplicates res))
+          "All mapped integers are unique."))
+    (let ((res (->> (loop :for rank :in ranks
+                          :collect (make-card :rank rank :suit :joker))
+                    (mapcar #'card->int))))
+      (true (every #'integerp res) "Every mapped element is an integer.")
+      (true (every (lambda (n) (or (< n 0) (> n 51))) res)
+            "Every mapped element is outside of [0,51]")
+      (is eq (length res) (length (remove-duplicates res))
+          "All mapped integers are unique."))))
