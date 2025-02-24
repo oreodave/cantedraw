@@ -59,6 +59,16 @@
     (true (every #'(lambda (x) (<= 0 x)) res))
     (is equal (length res) (length (remove-duplicates res)))))
 
+(define-test (model-test "int->rank and rank->int are complete inverses")
+  :depends-on (rank->int int->rank)
+  (let ((int-range (range 0 13))
+        (rank-range (->> (list :ace :jack :queen :king)
+                         (append (range 2 11)))))
+    (is equal rank-range
+        (mapcar ($>> rank->int int->rank) rank-range))
+    (is equal int-range
+        (mapcar ($>> int->rank rank->int) int-range))))
+
 (define-test (model-test int->suit)
   :depends-on ((cantedraw/tests/macros ->>)
                (cantedraw/tests/functions rev-map))
