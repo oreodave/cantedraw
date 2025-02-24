@@ -23,6 +23,27 @@
 
 (define-test model-test)
 
+(define-test (model-test int->rank)
+  :depends-on ((cantedraw/tests/macros ->>)
+               (cantedraw/tests/functions rev-map))
+  :compile-at :execute
+  (fail (int->rank nil))
+  (fail (int->rank "Not a number"))
+  ;; Proving int->rank maps 0-51 to produces 13 ranks, all equally distributed.
+  (let ((mapping (rev-map #'int->rank (range 0 52))))
+    ;; Prove there are 13 ranks
+    (is eq 13 (length mapping))
+    ;; Prove every rank is equivalent in length.
+    (is eq 1 (->> mapping
+                  (mapcar ($>> cdr length))
+                  remove-duplicates
+                  length))
+    ;; Prove Ace, 2, ..., 10, Jack, Queen, King are the 13 ranks.
+    (true (every #'identity
+             (->> (list :ace :king :queen :jack)
+                  (append (range 2 11))
+                  (mapcar (lambda (rank) (assoc rank mapping))))))))
+
 (define-test (model-test int->suit)
   :depends-on ((cantedraw/tests/macros ->>)
                (cantedraw/tests/functions rev-map))
