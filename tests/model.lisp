@@ -103,3 +103,12 @@
     (true (every ($>> (<= 0)) res) "All positive")
     (is equal (length res) (length (remove-duplicates res)) "Unique mapping")))
 
+(define-test (model-test "int->suit and suit->int are complete inverses")
+  :depends-on (suit->int int->suit)
+  (let ((int-range (list 0 13 26 39 52))
+        (suit-range (list :diamonds :clubs :hearts :spades :joker)))
+    (is equal suit-range
+        (mapcar ($>> suit->int int->suit) suit-range))
+    (is equal int-range
+        (mapcar ($>> int->suit suit->int) int-range))))
+
