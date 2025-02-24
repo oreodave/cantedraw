@@ -88,3 +88,18 @@
                     (mapcar #'length)
                     remove-duplicates
                     length)))))
+
+(define-test (model-test suit->int)
+  :depends-on ((cantedraw/tests/macros ->>))
+  :compile-at :execute
+  (fail (suit->int nil))
+  (fail (suit->int "not a suit"))
+  (fail (suit->int :still-not-a-suit))
+  (fail (suit->int 42069))
+  ;; Prove suits are mapped to unique positive integers
+  (let ((res (->> (list :diamonds :clubs :hearts :spades :joker)
+                  (mapcar #'suit->int))))
+    (true (every #'integerp res) "All integers")
+    (true (every ($>> (<= 0)) res) "All positive")
+    (is equal (length res) (length (remove-duplicates res)) "Unique mapping")))
+
