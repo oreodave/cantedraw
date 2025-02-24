@@ -45,13 +45,13 @@
     (3 :Spades)
     (t :Joker)))
 
-(fn suit->int (item) (-> (suit) (integer 0 4))
+(fn suit->int (item) (-> (suit) (integer 0 52))
   (case item
     (:Diamonds 0)
-    (:Clubs    1)
-    (:Hearts   2)
-    (:Spades   3)
-    (t         4)))
+    (:Clubs    13)
+    (:Hearts   26)
+    (:Spades   39)
+    (t         52)))
 
 (fn int->rank (n) (-> (fixnum) rank)
   (let ((n (mod n 13)))
@@ -74,13 +74,11 @@
   (make-card :rank (int->rank num)
              :suit (int->suit num)))
 
-(fn card->int (card) (-> (card) int-card)
+(fn card->int (card) (-> (card) fixnum)
   (with-slots ((rank rank) (suit suit)) card
     (let ((rank (rank->int rank))
           (suit (suit->int suit)))
-      (->> suit
-           (* 13)
-           (+ rank)))))
+      (+ rank suit))))
 
 (fn suit< (s1 s2) (-> (suit suit) boolean)
   (< (suit->int s1) (suit->int s2)))
