@@ -112,3 +112,23 @@
     (is equal int-range
         (mapcar ($>> int->suit suit->int) int-range))))
 
+(define-test (model-test int->card)
+  :depends-on ((cantedraw/tests/functions range))
+  :compile-at :execute
+  (fail (int->card nil))
+  (fail (int->card "Not a number"))
+  ;; Proving int->card maps 0-51 to exactly 52 unique cards
+  (let ((mapping (mapcar #'int->card (range 0 52))))
+    (is eq 52 (length (remove-duplicates mapping :test #'equal))
+        "52 unique elements.")
+    (true (every #'card-p mapping)
+          "Every element is a card."))
+  ;; Prove that cards outside of [0, 51] are mapped to jokers (not exhaustive)
+  (loop :for positive :from 100 :to 200
+        :for negative :from -200 :to -100
+        :for inp := (mapcar #'int->card (list positive negative))
+        :do (true (every #'card-p inp)
+                  "Is a card.")
+        :do (true (every (lambda (c) (eq :joker (card-suit c))) inp)
+                  "Are jokers.")))
+
